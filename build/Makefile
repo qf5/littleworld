@@ -111,6 +111,19 @@ depend:
 .PHONY : depend
 
 #=============================================================================
+# Target rules for targets named test_log
+
+# Build rule for target.
+test_log: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 test_log
+.PHONY : test_log
+
+# fast build rule for target.
+test_log/fast:
+	$(MAKE) -f CMakeFiles/test_log.dir/build.make CMakeFiles/test_log.dir/build
+.PHONY : test_log/fast
+
+#=============================================================================
 # Target rules for targets named test_make
 
 # Build rule for target.
@@ -122,6 +135,60 @@ test_make: cmake_check_build_system
 test_make/fast:
 	$(MAKE) -f CMakeFiles/test_make.dir/build.make CMakeFiles/test_make.dir/build
 .PHONY : test_make/fast
+
+src/log.o: src/log.cpp.o
+
+.PHONY : src/log.o
+
+# target to build an object file
+src/log.cpp.o:
+	$(MAKE) -f CMakeFiles/test_log.dir/build.make CMakeFiles/test_log.dir/src/log.cpp.o
+.PHONY : src/log.cpp.o
+
+src/log.i: src/log.cpp.i
+
+.PHONY : src/log.i
+
+# target to preprocess a source file
+src/log.cpp.i:
+	$(MAKE) -f CMakeFiles/test_log.dir/build.make CMakeFiles/test_log.dir/src/log.cpp.i
+.PHONY : src/log.cpp.i
+
+src/log.s: src/log.cpp.s
+
+.PHONY : src/log.s
+
+# target to generate assembly for a file
+src/log.cpp.s:
+	$(MAKE) -f CMakeFiles/test_log.dir/build.make CMakeFiles/test_log.dir/src/log.cpp.s
+.PHONY : src/log.cpp.s
+
+test/test_log.o: test/test_log.cpp.o
+
+.PHONY : test/test_log.o
+
+# target to build an object file
+test/test_log.cpp.o:
+	$(MAKE) -f CMakeFiles/test_log.dir/build.make CMakeFiles/test_log.dir/test/test_log.cpp.o
+.PHONY : test/test_log.cpp.o
+
+test/test_log.i: test/test_log.cpp.i
+
+.PHONY : test/test_log.i
+
+# target to preprocess a source file
+test/test_log.cpp.i:
+	$(MAKE) -f CMakeFiles/test_log.dir/build.make CMakeFiles/test_log.dir/test/test_log.cpp.i
+.PHONY : test/test_log.cpp.i
+
+test/test_log.s: test/test_log.cpp.s
+
+.PHONY : test/test_log.s
+
+# target to generate assembly for a file
+test/test_log.cpp.s:
+	$(MAKE) -f CMakeFiles/test_log.dir/build.make CMakeFiles/test_log.dir/test/test_log.cpp.s
+.PHONY : test/test_log.cpp.s
 
 test/test_make.o: test/test_make.cpp.o
 
@@ -158,7 +225,14 @@ help:
 	@echo "... depend"
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
+	@echo "... test_log"
 	@echo "... test_make"
+	@echo "... src/log.o"
+	@echo "... src/log.i"
+	@echo "... src/log.s"
+	@echo "... test/test_log.o"
+	@echo "... test/test_log.i"
+	@echo "... test/test_log.s"
 	@echo "... test/test_make.o"
 	@echo "... test/test_make.i"
 	@echo "... test/test_make.s"
