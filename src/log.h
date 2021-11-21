@@ -1,14 +1,18 @@
 #pragma once
 
+#include <fstream>
 #include <iostream>
-#include <sstream>
 #include <iomanip>
 #include <memory>
 #include <map>
+#include <sstream>
 #include <string>
-#include <time.h>
 #include <sys/time.h>
+#include <time.h>
+#include <type_traits>
 #include <vector>
+
+#include "util.h"
 
 namespace qf
 {
@@ -142,7 +146,7 @@ public:
 	}
 
 protected:
-	virtual void Output(LogEventPtr event) const {
+	virtual void Output(LogEventPtr event) {
 
 	}
 
@@ -160,7 +164,32 @@ public:
 
 	}
 
-	virtual void Output(LogEventPtr event) const override;
+	virtual void Output(LogEventPtr event) override;
+};
+
+class FileWriter : public LogWriter
+{
+public:
+	FileWriter(const LogFormaterPtr formater, const std::string& name)
+		: LogWriter(formater)
+		, m_fileName(name) {
+		if (name.find_last_of(".log") == std::string::npos) {
+			m_fileName += ".log";
+		}
+		m_ofs.open(m_fileName, std::ios::out | std::ios::app);
+	}
+
+	~FileWriter() {
+		if (m_ofs.is_open()) {
+			m_ofs.close();
+		}
+	}
+
+	virtual void Output(LogEventPtr event) override;
+
+private:
+	std::string m_fileName;
+	std::ofstream m_ofs;
 };
 
 class Logger
@@ -172,28 +201,28 @@ public:
 	}
 
 	template<class... Args>
-	void Debug(Args&... argList) {
-		Log(LogLevel::DEBUG, argList...);
+	void Debug(Args&&... argList) {
+		Log(LogLevel::DEBUG, std::forward<Args>(argList)...);
 	}
 
 	template<class... Args>
-	void Info(Args&... argList) {
-		Log(LogLevel::INFO, argList...);
+	void Info(Args&&... argList) {
+		Log(LogLevel::INFO, std::forward<Args>(argList)...);
 	}
 
 	template<class... Args>
-	void Warning(Args&... argList) {
-		Log(LogLevel::WARNING, argList...);
+	void Warning(Args&&... argList) {
+		Log(LogLevel::WARNING, std::forward<Args>(argList)...);
 	}
 
 	template<class... Args>
-	void Error(Args&... argList) {
-		Log(LogLevel::ERROR, argList...);
+	void Error(Args&&... argList) {
+		Log(LogLevel::ERROR, std::forward<Args>(argList)...);
 	}
 
 	template<class... Args>
-	void Critical(Args&... argList) {
-		Log(LogLevel::CRITICAL, argList...);
+	void Critical(Args&&... argList) {
+		Log(LogLevel::CRITICAL, std::forward<Args>(argList)...);
 	}
 
 	void SetLogLevel(LogLevel level, const std::string& name = "") {
@@ -209,22 +238,40 @@ public:
 		}
 	}
 
+	void AddFileWriter(const std::string& name) {
+		LogWriterPtr writer = std::make_shared<FileWriter>(m_formater, name);
+		m_writers.insert(std::make_pair(name, writer));
+	}
+
 private:
 	template<class First>
-	void MakeLogMsg(std::ostringstream& os, First& first) {
+	typename std::enable_if<util::is_bool<First>::value>::type
+	MakeOneMsg(std::ostringstream& os, First&& first) {
+		os << (first ? "true" : "false");
+	}
+
+	template<class First>
+	typename std::enable_if<!util::is_bool<First>::value>::type
+	MakeOneMsg(std::ostringstream& os, First&& first) {
 		os << first;
 	}
 
+	template<class First>
+	void MakeLogMsg(std::ostringstream& os, First&& first) {
+		MakeOneMsg(os, std::forward<First>(first));
+	}
+
 	template<class First, class... Args>
-	void MakeLogMsg(std::ostringstream& os, First& first, Args&... argList) {
-		os << first << " ";
-		MakeLogMsg(os, argList...);
+	void MakeLogMsg(std::ostringstream& os, First&& first, Args&&... argList) {
+		MakeOneMsg(os, std::forward<First>(first));
+		os << " ";
+		MakeLogMsg(os, std::forward<Args>(argList)...);
 	}
 
 	template<class... Args>
-	void Log(LogLevel level, Args&... argList) {
+	void Log(LogLevel level, Args&&... argList) {
 		std::ostringstream os;
-		MakeLogMsg(os, argList...);
+		MakeLogMsg(os, std::forward<Args>(argList)...);
 		Log(std::make_shared<LogEvent>(level, os.str()));
 	}
 
@@ -241,7 +288,30 @@ private:
 
 typedef std::shared_ptr<Logger> LoggerPtr;
 
+class LoggerManager
+{
+public:
+	LoggerManager() {
+		auto logger = std::make_shared<Logger>();
+		m_loggers.insert(std::make_pair("default", logger));
+	}
+
+	LoggerPtr GetLogger(const std::string& name = "default") {
+		auto iter = m_loggers.find(name);
+		if (iter != m_loggers.end()) {
+			return iter->second;
+		}
+		auto logger = std::make_shared<Logger>();
+		logger->AddFileWriter(name);
+		m_loggers.insert(std::make_pair(name, logger));
+		return logger;
+	}
+
+private:
+	std::map<std::string, LoggerPtr> m_loggers;
+};
+
 }//namespace::log
 
-const log::Logger& GetLogger();
+const log::Logger& GetLogger(const std::string& name = "default");
 }

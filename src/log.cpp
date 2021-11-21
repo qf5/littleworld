@@ -69,15 +69,21 @@ void LogFormater::Init() {
 	}
 }
 
-void StdWriter::Output(LogEventPtr event) const {
+void StdWriter::Output(LogEventPtr event) {
 	auto logString = m_formater->GenLogString(event);
 	std::cout << logString << std::endl;
 }
 
+void FileWriter::Output(LogEventPtr event) {
+	auto logString = m_formater->GenLogString(event);
+	m_ofs << logString << std::endl;
 }
 
-const log::Logger& GetLogger() {
-	return *GetInstance<log::Logger>();
+}
+
+const log::Logger& GetLogger(const std::string& name) {
+	auto mgr = util::GetInstance<log::LoggerManager>();
+	return *mgr->GetLogger(name);
 }
 
 }
