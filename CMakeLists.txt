@@ -8,7 +8,9 @@ SET(CMAK_CXX_COMPILER g++)
 add_compile_options(-std=c++14)
 
 include_directories(src/)
-set(SRC src/log.cpp)
+set(SRC src/log.cpp
+		src/coroutine.cpp)
 
 add_executable(test_make test/test_make.cpp)
 add_executable(test_log ${SRC} test/test_log.cpp)
+add_executable(test_coroutine ${SRC} test/test_coroutine.cpp)

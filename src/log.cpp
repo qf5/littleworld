@@ -81,9 +81,9 @@ void FileWriter::Output(LogEventPtr event) {
 
 }
 
-const log::Logger& GetLogger(const std::string& name) {
+const log::LoggerPtr GetLogger(const std::string& name) {
 	auto mgr = util::GetInstance<log::LoggerManager>();
-	return *mgr->GetLogger(name);
+	return mgr->GetLogger(name);
 }
 
 }

@@ -111,6 +111,19 @@ depend:
 .PHONY : depend
 
 #=============================================================================
+# Target rules for targets named test_coroutine
+
+# Build rule for target.
+test_coroutine: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 test_coroutine
+.PHONY : test_coroutine
+
+# fast build rule for target.
+test_coroutine/fast:
+	$(MAKE) -f CMakeFiles/test_coroutine.dir/build.make CMakeFiles/test_coroutine.dir/build
+.PHONY : test_coroutine/fast
+
+#=============================================================================
 # Target rules for targets named test_log
 
 # Build rule for target.
@@ -136,12 +149,43 @@ test_make/fast:
 	$(MAKE) -f CMakeFiles/test_make.dir/build.make CMakeFiles/test_make.dir/build
 .PHONY : test_make/fast
 
+src/coroutine.o: src/coroutine.cpp.o
+
+.PHONY : src/coroutine.o
+
+# target to build an object file
+src/coroutine.cpp.o:
+	$(MAKE) -f CMakeFiles/test_coroutine.dir/build.make CMakeFiles/test_coroutine.dir/src/coroutine.cpp.o
+	$(MAKE) -f CMakeFiles/test_log.dir/build.make CMakeFiles/test_log.dir/src/coroutine.cpp.o
+.PHONY : src/coroutine.cpp.o
+
+src/coroutine.i: src/coroutine.cpp.i
+
+.PHONY : src/coroutine.i
+
+# target to preprocess a source file
+src/coroutine.cpp.i:
+	$(MAKE) -f CMakeFiles/test_coroutine.dir/build.make CMakeFiles/test_coroutine.dir/src/coroutine.cpp.i
+	$(MAKE) -f CMakeFiles/test_log.dir/build.make CMakeFiles/test_log.dir/src/coroutine.cpp.i
+.PHONY : src/coroutine.cpp.i
+
+src/coroutine.s: src/coroutine.cpp.s
+
+.PHONY : src/coroutine.s
+
+# target to generate assembly for a file
+src/coroutine.cpp.s:
+	$(MAKE) -f CMakeFiles/test_coroutine.dir/build.make CMakeFiles/test_coroutine.dir/src/coroutine.cpp.s
+	$(MAKE) -f CMakeFiles/test_log.dir/build.make CMakeFiles/test_log.dir/src/coroutine.cpp.s
+.PHONY : src/coroutine.cpp.s
+
 src/log.o: src/log.cpp.o
 
 .PHONY : src/log.o
 
 # target to build an object file
 src/log.cpp.o:
+	$(MAKE) -f CMakeFiles/test_coroutine.dir/build.make CMakeFiles/test_coroutine.dir/src/log.cpp.o
 	$(MAKE) -f CMakeFiles/test_log.dir/build.make CMakeFiles/test_log.dir/src/log.cpp.o
 .PHONY : src/log.cpp.o
 
@@ -151,6 +195,7 @@ src/log.i: src/log.cpp.i
 
 # target to preprocess a source file
 src/log.cpp.i:
+	$(MAKE) -f CMakeFiles/test_coroutine.dir/build.make CMakeFiles/test_coroutine.dir/src/log.cpp.i
 	$(MAKE) -f CMakeFiles/test_log.dir/build.make CMakeFiles/test_log.dir/src/log.cpp.i
 .PHONY : src/log.cpp.i
 
@@ -160,8 +205,36 @@ src/log.s: src/log.cpp.s
 
 # target to generate assembly for a file
 src/log.cpp.s:
+	$(MAKE) -f CMakeFiles/test_coroutine.dir/build.make CMakeFiles/test_coroutine.dir/src/log.cpp.s
 	$(MAKE) -f CMakeFiles/test_log.dir/build.make CMakeFiles/test_log.dir/src/log.cpp.s
 .PHONY : src/log.cpp.s
+
+test/test_coroutine.o: test/test_coroutine.cpp.o
+
+.PHONY : test/test_coroutine.o
+
+# target to build an object file
+test/test_coroutine.cpp.o:
+	$(MAKE) -f CMakeFiles/test_coroutine.dir/build.make CMakeFiles/test_coroutine.dir/test/test_coroutine.cpp.o
+.PHONY : test/test_coroutine.cpp.o
+
+test/test_coroutine.i: test/test_coroutine.cpp.i
+
+.PHONY : test/test_coroutine.i
+
+# target to preprocess a source file
+test/test_coroutine.cpp.i:
+	$(MAKE) -f CMakeFiles/test_coroutine.dir/build.make CMakeFiles/test_coroutine.dir/test/test_coroutine.cpp.i
+.PHONY : test/test_coroutine.cpp.i
+
+test/test_coroutine.s: test/test_coroutine.cpp.s
+
+.PHONY : test/test_coroutine.s
+
+# target to generate assembly for a file
+test/test_coroutine.cpp.s:
+	$(MAKE) -f CMakeFiles/test_coroutine.dir/build.make CMakeFiles/test_coroutine.dir/test/test_coroutine.cpp.s
+.PHONY : test/test_coroutine.cpp.s
 
 test/test_log.o: test/test_log.cpp.o
 
@@ -224,12 +297,19 @@ help:
 	@echo "... clean"
 	@echo "... depend"
 	@echo "... rebuild_cache"
+	@echo "... test_coroutine"
 	@echo "... edit_cache"
 	@echo "... test_log"
 	@echo "... test_make"
+	@echo "... src/coroutine.o"
+	@echo "... src/coroutine.i"
+	@echo "... src/coroutine.s"
 	@echo "... src/log.o"
 	@echo "... src/log.i"
 	@echo "... src/log.s"
+	@echo "... test/test_coroutine.o"
+	@echo "... test/test_coroutine.i"
+	@echo "... test/test_coroutine.s"
 	@echo "... test/test_log.o"
 	@echo "... test/test_log.i"
 	@echo "... test/test_log.s"

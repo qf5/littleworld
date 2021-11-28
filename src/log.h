@@ -313,5 +313,5 @@ private:
 
 }//namespace::log
 
-const log::Logger& GetLogger(const std::string& name = "default");
+const log::LoggerPtr GetLogger(const std::string& name = "default");
 }
