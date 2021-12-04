@@ -111,6 +111,32 @@ depend:
 .PHONY : depend
 
 #=============================================================================
+# Target rules for targets named test_scheduler
+
+# Build rule for target.
+test_scheduler: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 test_scheduler
+.PHONY : test_scheduler
+
+# fast build rule for target.
+test_scheduler/fast:
+	$(MAKE) -f CMakeFiles/test_scheduler.dir/build.make CMakeFiles/test_scheduler.dir/build
+.PHONY : test_scheduler/fast
+
+#=============================================================================
+# Target rules for targets named test_thread
+
+# Build rule for target.
+test_thread: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 test_thread
+.PHONY : test_thread
+
+# fast build rule for target.
+test_thread/fast:
+	$(MAKE) -f CMakeFiles/test_thread.dir/build.make CMakeFiles/test_thread.dir/build
+.PHONY : test_thread/fast
+
+#=============================================================================
 # Target rules for targets named test_coroutine
 
 # Build rule for target.
@@ -155,6 +181,8 @@ src/coroutine.o: src/coroutine.cpp.o
 
 # target to build an object file
 src/coroutine.cpp.o:
+	$(MAKE) -f CMakeFiles/test_scheduler.dir/build.make CMakeFiles/test_scheduler.dir/src/coroutine.cpp.o
+	$(MAKE) -f CMakeFiles/test_thread.dir/build.make CMakeFiles/test_thread.dir/src/coroutine.cpp.o
 	$(MAKE) -f CMakeFiles/test_coroutine.dir/build.make CMakeFiles/test_coroutine.dir/src/coroutine.cpp.o
 	$(MAKE) -f CMakeFiles/test_log.dir/build.make CMakeFiles/test_log.dir/src/coroutine.cpp.o
 .PHONY : src/coroutine.cpp.o
@@ -165,6 +193,8 @@ src/coroutine.i: src/coroutine.cpp.i
 
 # target to preprocess a source file
 src/coroutine.cpp.i:
+	$(MAKE) -f CMakeFiles/test_scheduler.dir/build.make CMakeFiles/test_scheduler.dir/src/coroutine.cpp.i
+	$(MAKE) -f CMakeFiles/test_thread.dir/build.make CMakeFiles/test_thread.dir/src/coroutine.cpp.i
 	$(MAKE) -f CMakeFiles/test_coroutine.dir/build.make CMakeFiles/test_coroutine.dir/src/coroutine.cpp.i
 	$(MAKE) -f CMakeFiles/test_log.dir/build.make CMakeFiles/test_log.dir/src/coroutine.cpp.i
 .PHONY : src/coroutine.cpp.i
@@ -175,6 +205,8 @@ src/coroutine.s: src/coroutine.cpp.s
 
 # target to generate assembly for a file
 src/coroutine.cpp.s:
+	$(MAKE) -f CMakeFiles/test_scheduler.dir/build.make CMakeFiles/test_scheduler.dir/src/coroutine.cpp.s
+	$(MAKE) -f CMakeFiles/test_thread.dir/build.make CMakeFiles/test_thread.dir/src/coroutine.cpp.s
 	$(MAKE) -f CMakeFiles/test_coroutine.dir/build.make CMakeFiles/test_coroutine.dir/src/coroutine.cpp.s
 	$(MAKE) -f CMakeFiles/test_log.dir/build.make CMakeFiles/test_log.dir/src/coroutine.cpp.s
 .PHONY : src/coroutine.cpp.s
@@ -185,6 +217,8 @@ src/log.o: src/log.cpp.o
 
 # target to build an object file
 src/log.cpp.o:
+	$(MAKE) -f CMakeFiles/test_scheduler.dir/build.make CMakeFiles/test_scheduler.dir/src/log.cpp.o
+	$(MAKE) -f CMakeFiles/test_thread.dir/build.make CMakeFiles/test_thread.dir/src/log.cpp.o
 	$(MAKE) -f CMakeFiles/test_coroutine.dir/build.make CMakeFiles/test_coroutine.dir/src/log.cpp.o
 	$(MAKE) -f CMakeFiles/test_log.dir/build.make CMakeFiles/test_log.dir/src/log.cpp.o
 .PHONY : src/log.cpp.o
@@ -195,6 +229,8 @@ src/log.i: src/log.cpp.i
 
 # target to preprocess a source file
 src/log.cpp.i:
+	$(MAKE) -f CMakeFiles/test_scheduler.dir/build.make CMakeFiles/test_scheduler.dir/src/log.cpp.i
+	$(MAKE) -f CMakeFiles/test_thread.dir/build.make CMakeFiles/test_thread.dir/src/log.cpp.i
 	$(MAKE) -f CMakeFiles/test_coroutine.dir/build.make CMakeFiles/test_coroutine.dir/src/log.cpp.i
 	$(MAKE) -f CMakeFiles/test_log.dir/build.make CMakeFiles/test_log.dir/src/log.cpp.i
 .PHONY : src/log.cpp.i
@@ -205,9 +241,83 @@ src/log.s: src/log.cpp.s
 
 # target to generate assembly for a file
 src/log.cpp.s:
+	$(MAKE) -f CMakeFiles/test_scheduler.dir/build.make CMakeFiles/test_scheduler.dir/src/log.cpp.s
+	$(MAKE) -f CMakeFiles/test_thread.dir/build.make CMakeFiles/test_thread.dir/src/log.cpp.s
 	$(MAKE) -f CMakeFiles/test_coroutine.dir/build.make CMakeFiles/test_coroutine.dir/src/log.cpp.s
 	$(MAKE) -f CMakeFiles/test_log.dir/build.make CMakeFiles/test_log.dir/src/log.cpp.s
 .PHONY : src/log.cpp.s
+
+src/scheduler.o: src/scheduler.cpp.o
+
+.PHONY : src/scheduler.o
+
+# target to build an object file
+src/scheduler.cpp.o:
+	$(MAKE) -f CMakeFiles/test_scheduler.dir/build.make CMakeFiles/test_scheduler.dir/src/scheduler.cpp.o
+	$(MAKE) -f CMakeFiles/test_thread.dir/build.make CMakeFiles/test_thread.dir/src/scheduler.cpp.o
+	$(MAKE) -f CMakeFiles/test_coroutine.dir/build.make CMakeFiles/test_coroutine.dir/src/scheduler.cpp.o
+	$(MAKE) -f CMakeFiles/test_log.dir/build.make CMakeFiles/test_log.dir/src/scheduler.cpp.o
+.PHONY : src/scheduler.cpp.o
+
+src/scheduler.i: src/scheduler.cpp.i
+
+.PHONY : src/scheduler.i
+
+# target to preprocess a source file
+src/scheduler.cpp.i:
+	$(MAKE) -f CMakeFiles/test_scheduler.dir/build.make CMakeFiles/test_scheduler.dir/src/scheduler.cpp.i
+	$(MAKE) -f CMakeFiles/test_thread.dir/build.make CMakeFiles/test_thread.dir/src/scheduler.cpp.i
+	$(MAKE) -f CMakeFiles/test_coroutine.dir/build.make CMakeFiles/test_coroutine.dir/src/scheduler.cpp.i
+	$(MAKE) -f CMakeFiles/test_log.dir/build.make CMakeFiles/test_log.dir/src/scheduler.cpp.i
+.PHONY : src/scheduler.cpp.i
+
+src/scheduler.s: src/scheduler.cpp.s
+
+.PHONY : src/scheduler.s
+
+# target to generate assembly for a file
+src/scheduler.cpp.s:
+	$(MAKE) -f CMakeFiles/test_scheduler.dir/build.make CMakeFiles/test_scheduler.dir/src/scheduler.cpp.s
+	$(MAKE) -f CMakeFiles/test_thread.dir/build.make CMakeFiles/test_thread.dir/src/scheduler.cpp.s
+	$(MAKE) -f CMakeFiles/test_coroutine.dir/build.make CMakeFiles/test_coroutine.dir/src/scheduler.cpp.s
+	$(MAKE) -f CMakeFiles/test_log.dir/build.make CMakeFiles/test_log.dir/src/scheduler.cpp.s
+.PHONY : src/scheduler.cpp.s
+
+src/thread.o: src/thread.cpp.o
+
+.PHONY : src/thread.o
+
+# target to build an object file
+src/thread.cpp.o:
+	$(MAKE) -f CMakeFiles/test_scheduler.dir/build.make CMakeFiles/test_scheduler.dir/src/thread.cpp.o
+	$(MAKE) -f CMakeFiles/test_thread.dir/build.make CMakeFiles/test_thread.dir/src/thread.cpp.o
+	$(MAKE) -f CMakeFiles/test_coroutine.dir/build.make CMakeFiles/test_coroutine.dir/src/thread.cpp.o
+	$(MAKE) -f CMakeFiles/test_log.dir/build.make CMakeFiles/test_log.dir/src/thread.cpp.o
+.PHONY : src/thread.cpp.o
+
+src/thread.i: src/thread.cpp.i
+
+.PHONY : src/thread.i
+
+# target to preprocess a source file
+src/thread.cpp.i:
+	$(MAKE) -f CMakeFiles/test_scheduler.dir/build.make CMakeFiles/test_scheduler.dir/src/thread.cpp.i
+	$(MAKE) -f CMakeFiles/test_thread.dir/build.make CMakeFiles/test_thread.dir/src/thread.cpp.i
+	$(MAKE) -f CMakeFiles/test_coroutine.dir/build.make CMakeFiles/test_coroutine.dir/src/thread.cpp.i
+	$(MAKE) -f CMakeFiles/test_log.dir/build.make CMakeFiles/test_log.dir/src/thread.cpp.i
+.PHONY : src/thread.cpp.i
+
+src/thread.s: src/thread.cpp.s
+
+.PHONY : src/thread.s
+
+# target to generate assembly for a file
+src/thread.cpp.s:
+	$(MAKE) -f CMakeFiles/test_scheduler.dir/build.make CMakeFiles/test_scheduler.dir/src/thread.cpp.s
+	$(MAKE) -f CMakeFiles/test_thread.dir/build.make CMakeFiles/test_thread.dir/src/thread.cpp.s
+	$(MAKE) -f CMakeFiles/test_coroutine.dir/build.make CMakeFiles/test_coroutine.dir/src/thread.cpp.s
+	$(MAKE) -f CMakeFiles/test_log.dir/build.make CMakeFiles/test_log.dir/src/thread.cpp.s
+.PHONY : src/thread.cpp.s
 
 test/test_coroutine.o: test/test_coroutine.cpp.o
 
@@ -290,6 +400,60 @@ test/test_make.cpp.s:
 	$(MAKE) -f CMakeFiles/test_make.dir/build.make CMakeFiles/test_make.dir/test/test_make.cpp.s
 .PHONY : test/test_make.cpp.s
 
+test/test_scheduler.o: test/test_scheduler.cpp.o
+
+.PHONY : test/test_scheduler.o
+
+# target to build an object file
+test/test_scheduler.cpp.o:
+	$(MAKE) -f CMakeFiles/test_scheduler.dir/build.make CMakeFiles/test_scheduler.dir/test/test_scheduler.cpp.o
+.PHONY : test/test_scheduler.cpp.o
+
+test/test_scheduler.i: test/test_scheduler.cpp.i
+
+.PHONY : test/test_scheduler.i
+
+# target to preprocess a source file
+test/test_scheduler.cpp.i:
+	$(MAKE) -f CMakeFiles/test_scheduler.dir/build.make CMakeFiles/test_scheduler.dir/test/test_scheduler.cpp.i
+.PHONY : test/test_scheduler.cpp.i
+
+test/test_scheduler.s: test/test_scheduler.cpp.s
+
+.PHONY : test/test_scheduler.s
+
+# target to generate assembly for a file
+test/test_scheduler.cpp.s:
+	$(MAKE) -f CMakeFiles/test_scheduler.dir/build.make CMakeFiles/test_scheduler.dir/test/test_scheduler.cpp.s
+.PHONY : test/test_scheduler.cpp.s
+
+test/test_thread.o: test/test_thread.cpp.o
+
+.PHONY : test/test_thread.o
+
+# target to build an object file
+test/test_thread.cpp.o:
+	$(MAKE) -f CMakeFiles/test_thread.dir/build.make CMakeFiles/test_thread.dir/test/test_thread.cpp.o
+.PHONY : test/test_thread.cpp.o
+
+test/test_thread.i: test/test_thread.cpp.i
+
+.PHONY : test/test_thread.i
+
+# target to preprocess a source file
+test/test_thread.cpp.i:
+	$(MAKE) -f CMakeFiles/test_thread.dir/build.make CMakeFiles/test_thread.dir/test/test_thread.cpp.i
+.PHONY : test/test_thread.cpp.i
+
+test/test_thread.s: test/test_thread.cpp.s
+
+.PHONY : test/test_thread.s
+
+# target to generate assembly for a file
+test/test_thread.cpp.s:
+	$(MAKE) -f CMakeFiles/test_thread.dir/build.make CMakeFiles/test_thread.dir/test/test_thread.cpp.s
+.PHONY : test/test_thread.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -297,6 +461,8 @@ help:
 	@echo "... clean"
 	@echo "... depend"
 	@echo "... rebuild_cache"
+	@echo "... test_scheduler"
+	@echo "... test_thread"
 	@echo "... test_coroutine"
 	@echo "... edit_cache"
 	@echo "... test_log"
@@ -307,6 +473,12 @@ help:
 	@echo "... src/log.o"
 	@echo "... src/log.i"
 	@echo "... src/log.s"
+	@echo "... src/scheduler.o"
+	@echo "... src/scheduler.i"
+	@echo "... src/scheduler.s"
+	@echo "... src/thread.o"
+	@echo "... src/thread.i"
+	@echo "... src/thread.s"
 	@echo "... test/test_coroutine.o"
 	@echo "... test/test_coroutine.i"
 	@echo "... test/test_coroutine.s"
@@ -316,6 +488,12 @@ help:
 	@echo "... test/test_make.o"
 	@echo "... test/test_make.i"
 	@echo "... test/test_make.s"
+	@echo "... test/test_scheduler.o"
+	@echo "... test/test_scheduler.i"
+	@echo "... test/test_scheduler.s"
+	@echo "... test/test_thread.o"
+	@echo "... test/test_thread.i"
+	@echo "... test/test_thread.s"
 .PHONY : help
 
 

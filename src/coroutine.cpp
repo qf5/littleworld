@@ -32,11 +32,6 @@ void CoManager::Resume(CoroutinePtr& co) {
 	SetRunning(oco);
 }
 
-void Resume(const CoroutinePtr& co) {
-	auto manager = util::GetInstance<CoManager>();
-	manager->Resume(const_cast<CoroutinePtr&>(co));
-}
-
 void CoManager::Yield() {
 	assert(m_running);
 	assert(m_running->status == CoStatus::RUNNING);
@@ -44,9 +39,37 @@ void CoManager::Yield() {
 	swapcontext(&m_running->ctx, &m_running->octx);
 }
 
+void Resume(const CoroutinePtr& co) {
+	auto manager = util::GetInstance<CoManager>();
+	manager->Resume(const_cast<CoroutinePtr&>(co));
+}
+
 void Yield() {
 	auto manager = util::GetInstance<CoManager>();
 	manager->Yield();
+}
+
+const CoroutinePtr Running() {
+	auto manager = util::GetInstance<CoManager>();
+	return manager->GetRunning();
+}
+
+static std::map<CoStatus, const char*> StatusDesc = {
+	{ CoStatus::DEAD, "Dead" },
+	{ CoStatus::RUNNING, "Running" },
+	{ CoStatus::SUSPENDED, "Suspended" },
+};
+
+const char* Status(const CoroutinePtr& co) {
+	return StatusDesc[co->status];
+}
+
+CoManagerPtr GetManager() {
+	static thread_local CoManagerPtr manager;
+	if (!manager) {
+		manager = std::make_shared<CoManager>();
+	}
+	return manager;
 }
 
 }

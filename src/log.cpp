@@ -26,6 +26,8 @@ FormatItemPtr LogFormater::GenFormatItem(char c) {
 		return std::make_shared<LevelFormatItem>();
 	case 'm':
 		return std::make_shared<MsgFormatItem>();
+	case 't':
+		return std::make_shared<ThreadFormatItem>();
 	default:
 		break;
 	}
@@ -34,7 +36,7 @@ FormatItemPtr LogFormater::GenFormatItem(char c) {
 	return std::make_shared<StrFormatItem>(s);
 }
 
-std::string LogFormater::s_fmt = "[%d ][%p] %m";
+std::string LogFormater::s_fmt = "[%d ][thread_%t][%p] %m";
 
 void LogFormater::Init() {
 	int len = (int)s_fmt.size();

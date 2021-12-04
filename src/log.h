@@ -12,6 +12,7 @@
 #include <type_traits>
 #include <vector>
 
+#include "thread.h"
 #include "util.h"
 
 namespace qf
@@ -33,9 +34,11 @@ struct LogEvent
 	LogEvent(LogLevel level, const std::string& msg)
 		: level(level)
 		, msg(msg) {
-
+		threadId = thread::GetThreadId();
 	}
+
 	LogLevel level;
+	uint32_t threadId;
 	std::string msg;
 };
 typedef std::shared_ptr<LogEvent> LogEventPtr;
@@ -90,6 +93,14 @@ public:
 
 private:
 	std::string m_str;
+};
+
+class ThreadFormatItem : public FormatItem
+{
+public:
+	virtual void Format(std::ostringstream& os, const LogEventPtr event) const {
+		os << event->threadId;
+	}
 };
 
 class LogFormater

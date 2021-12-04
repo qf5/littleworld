@@ -1,8 +1,9 @@
 #pragma once
 
+#include <list>
+#include <map>
 #include <memory.h>
 #include <ucontext.h>
-#include <map>
 
 #include "util.h"
 
@@ -40,12 +41,12 @@ typedef std::shared_ptr<Coroutine> CoroutinePtr;
 
 class CoManager {
 public:
-	template<class F, class... ArgList>
-	const CoroutinePtr Create(F&& f, ArgList&&... argList) {
-		util::Func func(std::make_shared<util::FuncImpl<F, ArgList...>>(
-				std::forward<F>(f), std::forward<ArgList...>(argList)...));
-		return _create(func);
-	}
+//	template<class F, class... ArgList>
+//	const CoroutinePtr Create(F&& f, ArgList&&... argList) {
+//		util::Func func(std::make_shared<util::FuncImpl<F, ArgList...>>(
+//				std::forward<F>(f), std::forward<ArgList...>(argList)...));
+//		return _create(func);
+//	}
 
 	const CoroutinePtr _create(util::Func& func);
 
@@ -81,23 +82,24 @@ private:
 	CoroutinePtr m_running;
 };
 
+typedef std::shared_ptr<CoManager> CoManagerPtr;
+
 template<class F, class... ArgList>
 const CoroutinePtr Create(F&& f, ArgList&&... argList) {
+	auto func = util::CreateFunc(std::forward<F>(f), std::forward<ArgList...>(argList)...);
 	auto manager = util::GetInstance<CoManager>();
-	return manager->Create(std::forward<F>(f), std::forward<ArgList...>(argList)...);
+	return manager->_create(func);
 }
 
 void Resume(const CoroutinePtr& co);
 
 void Yield();
 
-CoStatus Status(const CoroutinePtr& co);
-
 const CoroutinePtr Running();
 
-class Scheduler {
-public:
-};
+const char* Status(const CoroutinePtr& co);
+
+CoManagerPtr GetManager();
 
 }
 
